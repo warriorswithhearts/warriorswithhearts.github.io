@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Warriors with Hearts - A nonprofit organization serving veterans and military personnel. Established in 2026, we honor those who served through dedicated programs and support.">
+  <title>Warriors with Hearts - Serving Those Who Served</title>
+  
+  <!-- 
+    PERFORMANCE OPTIMIZATION NOTES:
+    - Critical CSS is inlined below for faster initial render
+    - Images below the fold use loading="lazy" for deferred loading
+    - For production deployment: Minify CSS (css/styles.css) and JavaScript (js/script.js) files
+    - Recommended tools: cssnano, terser, or build tools like webpack/vite
+  -->
+  
+  <!-- Critical CSS - Inlined for faster initial render -->
+  <style>
+    /* Critical styles for above-the-fold content - Dark Mode */
+    :root {
+      --primary-purple: #8B5CF6;
+      --primary-gold: #F59E0B;
+      --charcoal: #0F172A;
+      --dark-slate: #1E293B;
+      --off-white: #F1F5F9;
+      --silver: #94A3B8;
+      --text-primary: var(--off-white);
+      --font-heading: 'Georgia', 'Times New Roman', serif;
+      --font-body: 'Helvetica Neue', Arial, sans-serif;
+      --max-content-width: 1200px;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      line-height: 1.5;
+      background-color: var(--charcoal);
+    }
+    
+    /* Navigation - Critical for initial render */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: var(--max-content-width);
+      margin: 0 auto;
+    }
+    
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-logo img { height: 50px; width: auto; max-width: 100%; border: none; padding: 0; }
+    
+    /* Hero Section - Critical for initial render */
+    .hero-section {
+      background: linear-gradient(135deg, var(--charcoal) 0%, var(--dark-slate) 50%, var(--charcoal) 100%);
+      padding: 3rem 1rem;
+      padding-top: 5rem;
+      text-align: center;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero-logo {
+      width: 70%;
+      max-width: 400px;
+      height: auto;
+      margin: 0 auto 2rem;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+    }
+    
+    
+    img { max-width: 100%; height: auto; display: block; }
+  </style>
+  
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Skip to Content Link for Screen Readers -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-logo">
+      <img src="images/logo.webp" alt="Warriors with Hearts - Purple heart with dog tags on American flag background">
+      <span class="org-name">Warriors with Hearts</span>
+    </div>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="hamburger"></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#donate">Donate</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Mobile Menu Overlay -->
+  <div class="nav-overlay"></div>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+      <div class="hero-content">
+        <img src="images/logo.webp" alt="Warriors with Hearts - Purple heart with dog tags on American flag background" class="hero-logo">
+        <h1>Warriors with Hearts</h1>
+        <p class="tagline">Serving Those Who Served</p>
+        <p class="mission-brief">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <a href="#donate" class="cta-button">Support Our Mission</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="content-section">
+      <div class="section-container">
+        <h2>About Us</h2>
+        <p>Morbi pretium egestas diam, eu pretium ipsum dictum ut. Nam blandit sapien non odio interdum lacinia.</p>
+        <p> Integer egestas volutpat ante, sed rutrum diam vestibulum ut. Sed interdum elementum commodo.Nullam at tortor a odio posuere consectetur et sed massa.</p>
+        <br />
+        <h2>Our Values</h2>
+        <ul>
+          <li><strong>Lorem:</strong> Donec malesuada sem leo, eget venenatis sem aliquet non.</li>
+          <li><strong>Ipsum:</strong> Praesent facilisis, ipsum ac rhoncus dictum, nisi augue consequat libero</li>
+          <li><strong>Donec:</strong> Sed enim leo, consectetur vel scelerisque in, lobortis porttitor est.</li>
+          <li><strong>Rutrum:</strong> Nulla condimentum mi eget consequat aliquam.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="content-section">
+      <div class="section-container">
+        <h2>Our Programs</h2>
+        <p>Morbi mollis vehicula felis non vehicula. Donec euismod malesuada dolor, ut viverra odio eleifend nec.</p>
+        
+        <div class="program-list">
+          <div class="program-item">
+            <h3>Program 1</h3>
+            <p> Maecenas rutrum facilisis nibh eu blandit. Nulla vitae urna id risus blandit maximus vitae id justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+          </div>
+          
+          <div class="program-item">
+            <h3>Program 2</h3>
+            <p> Maecenas rutrum facilisis nibh eu blandit. Nulla vitae urna id risus blandit maximus vitae id justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+          </div>
+          
+          <div class="program-item">
+            <h3>Program 3</h3>
+            <p> Maecenas rutrum facilisis nibh eu blandit. Nulla vitae urna id risus blandit maximus vitae id justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+          </div>
+          
+          <div class="program-item">
+            <h3>Program 4</h3>
+            <p> Maecenas rutrum facilisis nibh eu blandit. Nulla vitae urna id risus blandit maximus vitae id justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donate Section -->
+    <section id="donate" class="content-section donation-section">
+      <div class="section-container">
+        <h2>Support Our Mission</h2>
+        <p>Your generous donations help us continue providing vital services to veterans and military personnel. Every contribution makes a difference in the lives of those who have served our nation.</p>
+        
+        <div class="donation-content">
+          <div class="qr-code-container">
+            <img src="images/qr-code.png" alt="Scan to donate to Warriors with Hearts via Venmo" class="qr-code" loading="lazy">
+            <p class="qr-instructions">Scan the QR code with your phone camera or Venmo app to make a donation</p>
+            <p class="qr-alternative">Or visit: <a href="https://google.com" target="_blank" rel="noopener noreferrer">[link will go here]</a></p>
+          </div>
+          
+          <div class="donation-info">
+            <h3>Why Donate?</h3>
+            <ul>
+              <li>Phasellus sit amet felis quam. Sed vel ornare nisl.</li>
+              <li>Donec id tortor consectetur, feugiat nisl eget.</li>
+              <li>Etiam commodo purus libero, a elementum mi laoreet ut.</li>
+              <li>Morbi mollis vehicula felis non vehicula.</li>
+            </ul>
+            <p class="thank-you">Thank you for your support in honoring those who served!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="content-section">
+      <div class="section-container">
+        <h2>Contact Us</h2>
+        <p>We'd love to hear from you! Whether you're a veteran seeking support, a volunteer wanting to help, or a community partner interested in collaboration, please reach out.</p>
+        
+        <div class="contact-info">
+          <div class="contact-item">
+            <h3>Email</h3>
+            <a href="mailto:warriorswithhearts@gmail.com" class="contact-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+              <span>warriorswithhearts@gmail.com</span>
+            </a>
+          </div>
+          
+          <div class="contact-item">
+            <h3>Phone</h3>
+            <a href="tel:+15551234567" class="contact-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span>(555) 123-4567</span>
+            </a>
+          </div>
+          
+          <div class="contact-item">
+            <h3>Address</h3>
+            <p>
+              123 Veterans Way<br>
+              Anytown, ST 12345<br>
+              United States
+            </p>
+          </div>
+          
+          <div class="contact-item">
+            <h3>Connect With Us</h3>
+            <div class="social-links">
+              <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-content">
+      <div class="footer-section">
+        <p>&copy; 2026 Warriors with Hearts. All rights reserved.</p>
+        <p>Warriors with Hearts is a 501(c)(3) nonprofit organization</p>
+        <p>Established 2026 | Serving Those Who Served</p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#donate">Donate</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <div class="footer-social">
+          <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
