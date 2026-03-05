@@ -105,42 +105,49 @@ function closeMobileMenu() {
  */
 function initSmoothScrollNavigation() {
   const navLinks = document.querySelectorAll('.nav-menu a, .footer-links a, .cta-button');
-  
-  navLinks.forEach(function(link) {
-    // Only handle internal anchor links
+
+  navLinks.forEach((link) => {
     const href = link.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        
-        const targetId = href.substring(1);
-        const targetSection = document.getElementById(targetId);
-        
-        if (targetSection) {
-          // Get the navbar height to offset scroll position
-          const navbar = document.querySelector('.navbar');
-          const navbarHeight = navbar ? navbar.offsetHeight : 0;
-          
-          // Calculate target position accounting for fixed navbar
-          const targetPosition = targetSection.offsetTop - navbarHeight;
-          
-          // Smooth scroll to target position
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-          
-          // Update URL hash without jumping
-          if (history.pushState) {
-            history.pushState(null, null, href);
+    if (!href || !href.startsWith('#') || href === '#') return;
+
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const targetSection = document.querySelector(href);
+      if (!targetSection) return;
+
+      // Close mobile menu first so layout is stable
+      if (typeof closeMobileMenu === 'function') closeMobileMenu();
+
+      // Wait for any menu/header transitions to finish before computing position
+      setTimeout(() => {
+        const navbar = document.querySelector('.navbar');
+        const navbarHeight = navbar ? navbar.offsetHeight : 0;
+        const extraOffset = 16;
+
+        const targetY =
+          targetSection.getBoundingClientRect().top +
+          window.pageYOffset -
+          navbarHeight -
+          extraOffset;
+
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+
+        // Update hash without jump
+        if (history.pushState) history.pushState(null, '', href);
+
+        // Accessibility focus WITHOUT triggering another scroll
+        targetSection.setAttribute('tabindex', '-1');
+        if (typeof targetSection.focus === 'function') {
+          try {
+            targetSection.focus({ preventScroll: true });
+          } catch {
+            // Safari fallback (no preventScroll support)
+            targetSection.focus();
           }
-          
-          // Set focus to target section for accessibility
-          targetSection.setAttribute('tabindex', '-1');
-          targetSection.focus();
         }
-      });
-    }
+      }, 300);
+    });
   });
 }
 
