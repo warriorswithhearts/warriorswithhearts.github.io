@@ -141,6 +141,7 @@ table {
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  scroll-padding-top: 90px;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -865,7 +866,9 @@ main {
   line-height: var(--leading-relaxed);
   color: var(--text-primary);
   margin-bottom: 1rem;
-  text-align: center;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  text-align: justify;
 }
 
 /* Section Lists */
@@ -873,13 +876,15 @@ main {
   list-style: none;
   padding-left: 0;
   margin-bottom: 1.5rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
   text-align: left;
   display: inline-block;
 }
 
 .content-section ul li {
   padding-left: 1.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
   position: relative;
   line-height: var(--leading-relaxed);
 }
@@ -1073,11 +1078,17 @@ main {
 
 /* Contact Info - Mobile: Single Column */
 .contact-info {
+  width: 100%;
+  max-width: 1100px;  /* match your donate section width */
+  margin: 2rem auto 0;
+  padding: 0;
+
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
 }
+
 
 /* Fallback for browsers without CSS Grid support */
 @supports not (display: grid) {
@@ -1100,6 +1111,10 @@ main {
   border-radius: 12px;
   border: 1px solid var(--border-color);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .contact-item h3 {
@@ -1109,9 +1124,13 @@ main {
   margin-bottom: 0.75rem;
 }
 
+/* If your <p> is causing width/spacing issues, clamp it */
 .contact-item p {
   margin-bottom: 0;
   color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .contact-item a {
@@ -1175,9 +1194,11 @@ main {
 /* Social Links */
 .social-links {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex-direction: row;
   gap: 1rem;
   justify-content: center;
+  align-items: center;
 }
 
 .social-links a {
@@ -1373,7 +1394,20 @@ main {
   .donation-content {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    align-items: start;
+    align-items: stretch; /* was start */
+  }
+  
+  /* Make both cards fill the row height */
+  .qr-code-container,
+  .donation-info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Optional: keep the “thank you” at the bottom */
+  .donation-info .thank-you {
+    margin-top: auto;
   }
   
   /* Fallback for browsers without CSS Grid support */
@@ -1413,8 +1447,10 @@ main {
   
   /* Contact Info - Four Columns */
   .contact-info {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+    margin: 2rem auto 0;
+    padding: 0;
   }
   
   /* Footer Content - Increased Padding */
