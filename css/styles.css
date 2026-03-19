@@ -963,9 +963,17 @@ main {
 /* Donation Content - Mobile: Single Column */
 .donation-content {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
   margin-top: 2rem;
+  width: 100%;
+}
+
+.donation-section .section-container > p {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 /* Fallback for browsers without CSS Grid support */
@@ -993,6 +1001,12 @@ main {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+.qr-code-container,
+.donation-info {
+  width: 100%;
+  min-width: 0;
+}
+
 .qr-code {
   width: 300px;
   max-width: 100%;
@@ -1018,9 +1032,18 @@ main {
   color: var(--text-secondary);
 }
 
+.qr-code-container p,
+.donation-info p {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+}
+
 .qr-alternative a {
   color: var(--link);
   font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Donation Info */
@@ -1043,6 +1066,10 @@ main {
   list-style: none;
   padding-left: 0;
   margin-bottom: 1.5rem;
+  margin-left: 0;
+  margin-right: 0;
+  display: block;
+  text-align: left;
 }
 
 .donation-info ul li {
@@ -1070,6 +1097,22 @@ main {
   text-align: center;
   margin-top: 1.5rem;
   margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .donation-content {
+    gap: 1.5rem;
+  }
+
+  .qr-code-container,
+  .donation-info {
+    padding: 1.5rem;
+  }
+
+  .qr-code {
+    width: min(100%, 260px);
+    min-height: 0;
+  }
 }
 
 /* ===========================
