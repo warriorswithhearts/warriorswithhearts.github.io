@@ -240,7 +240,7 @@ function isMobileDevice() {
  */
 function initMobileQRCode() {
   const qrCodeImage = document.querySelector('.qr-code');
-  const venmoLink = 'https://venmo.com/warriorswithhearts';
+  const qrLink = 'https://www.paypal.com/qrcodes/managed/a84d018b-f8d9-4a26-9c41-b27b1644aae3';
   
   if (qrCodeImage && isMobileDevice()) {
     // Make QR code clickable on mobile
@@ -251,14 +251,14 @@ function initMobileQRCode() {
     
     // Add click handler
     qrCodeImage.addEventListener('click', function() {
-      window.location.href = venmoLink;
+      window.location.href = qrLink;
     });
     
     // Add keyboard support for accessibility
     qrCodeImage.addEventListener('keydown', function(event) {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        window.location.href = venmoLink;
+        window.location.href = qrLink;
       }
     });
     
