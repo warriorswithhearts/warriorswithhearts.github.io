@@ -927,10 +927,16 @@ main {
 .program-item {
   background: linear-gradient(135deg, var(--dark-slate) 0%, var(--slate) 100%);
   padding: 1.5rem;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+  overflow: hidden;
+  text-align: left;
+}
+
+.program-item.is-expanded {
+  border-color: var(--primary-purple);
 }
 
 .program-item:hover {
@@ -939,16 +945,79 @@ main {
   border-color: var(--primary-purple);
 }
 
-.program-item h3 {
-  margin-top: 0;
-  color: var(--primary-gold);
+.program-item .program-title {
+  display: block;
+  font-family: var(--font-heading);
   font-size: var(--text-xl);
+  font-weight: bold;
+  line-height: var(--leading-tight);
+  color: var(--primary-gold);
+  margin-top: 0;
   margin-bottom: 0.75rem;
+  text-align: center;
 }
 
 .program-item p {
-  margin-bottom: 0;
+  margin: 0;
   color: var(--text-secondary);
+  text-align: left;
+}
+
+.program-preview {
+  display: block;
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  min-height: 5.25rem;
+}
+
+.program-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.25rem;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--primary-gold);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+.program-toggle:focus {
+  outline: 2px solid var(--primary-gold);
+  outline-offset: 4px;
+}
+
+.program-toggle::after {
+  content: '+';
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 1px solid var(--primary-gold);
+  border-radius: 50%;
+  line-height: 1;
+}
+
+.program-toggle[aria-expanded="true"]::after {
+  content: '-';
+}
+
+.program-details {
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.program-details[hidden] {
+  display: none;
+}
+
+.program-details p + p {
+  margin-top: 1rem;
 }
 
 /* ===========================

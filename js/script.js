@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Mobile QR Code Click Functionality
   initMobileQRCode();
+
+  // Expandable Program Cards
+  initExpandableProgramCards();
 });
 
 /**
@@ -271,5 +274,33 @@ function initMobileQRCode() {
       qrCodeImage.style.opacity = '1';
     });
   }
+}
+
+/**
+ * Initialize expandable program cards.
+ * Reveals the full program description while keeping the preview visible.
+ */
+function initExpandableProgramCards() {
+  const toggles = document.querySelectorAll('.program-toggle[aria-controls]');
+
+  toggles.forEach(function(toggle) {
+    const detailsId = toggle.getAttribute('aria-controls');
+    const details = document.getElementById(detailsId);
+    const card = toggle.closest('.program-item');
+
+    if (!details || !card) return;
+
+    toggle.addEventListener('click', function() {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      const shouldExpand = !isExpanded;
+
+      toggle.setAttribute('aria-expanded', String(shouldExpand));
+      toggle.textContent = shouldExpand
+        ? toggle.dataset.lessText || 'Show less'
+        : toggle.dataset.moreText || 'Read more';
+      details.hidden = !shouldExpand;
+      card.classList.toggle('is-expanded', shouldExpand);
+    });
+  });
 }
 
