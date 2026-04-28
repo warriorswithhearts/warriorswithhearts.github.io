@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Expandable Program Cards
   initExpandableProgramCards();
+
+  // Board Member Modal
+  initBoardModal();
 });
 
 /**
@@ -302,5 +305,106 @@ function initExpandableProgramCards() {
       card.classList.toggle('is-expanded', shouldExpand);
     });
   });
+}
+
+/**
+ * Initialize board member modal interactions.
+ * Displays the selected member's portrait and biography in a modal dialog.
+ */
+function initBoardModal() {
+  const modal = document.querySelector('.board-modal');
+  const dialog = modal ? modal.querySelector('.board-modal-dialog') : null;
+  const modalImage = modal ? modal.querySelector('.board-modal-image') : null;
+  const modalPlaceholder = modal ? modal.querySelector('.board-modal-image-placeholder') : null;
+  const modalName = modal ? modal.querySelector('#board-modal-name') : null;
+  const modalTitle = modal ? modal.querySelector('.board-modal-title') : null;
+  const modalBio = modal ? modal.querySelector('.board-modal-bio') : null;
+  const closeButtons = modal ? modal.querySelectorAll('[data-board-close]') : [];
+  const memberButtons = document.querySelectorAll('.board-member');
+
+  if (!modal || !dialog || !modalImage || !modalPlaceholder || !modalName || !modalTitle || !modalBio || memberButtons.length === 0) {
+    return;
+  }
+
+  let lastTrigger = null;
+  let isClosingFromHistory = false;
+
+  memberButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      lastTrigger = button;
+      openBoardModal(button, true);
+    });
+  });
+
+  closeButtons.forEach(function(button) {
+    button.addEventListener('click', closeBoardModal);
+  });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && !modal.hidden) {
+      closeBoardModal();
+    }
+  });
+
+  window.addEventListener('popstate', function() {
+    if (!modal.hidden) {
+      isClosingFromHistory = true;
+      closeBoardModal();
+    }
+  });
+
+  function openBoardModal(button, pushHistory) {
+    const name = button.dataset.name || 'Board Member';
+    const title = button.dataset.title || 'Board Member';
+    const fullImage = button.dataset.fullImage || '';
+    const alt = button.dataset.alt || '';
+    const initials = button.dataset.initials || '';
+    const bio = button.dataset.bio || '<p>Full biography coming soon.</p>';
+
+    modalName.textContent = name;
+    modalTitle.textContent = title;
+    modalBio.innerHTML = bio;
+
+    if (fullImage) {
+      modalImage.src = fullImage;
+      modalImage.alt = alt;
+      modalImage.hidden = false;
+      modalPlaceholder.hidden = true;
+      modalPlaceholder.textContent = '';
+    } else {
+      modalImage.src = '';
+      modalImage.alt = '';
+      modalImage.hidden = true;
+      modalPlaceholder.hidden = false;
+      modalPlaceholder.textContent = initials;
+    }
+
+    modal.hidden = false;
+    document.body.classList.add('modal-open');
+    dialog.setAttribute('tabindex', '-1');
+    dialog.focus();
+
+    if (pushHistory) {
+      history.pushState({ boardModalOpen: true, memberName: name }, '', window.location.href);
+    }
+  }
+
+  function closeBoardModal() {
+    modal.hidden = true;
+    document.body.classList.remove('modal-open');
+    modalImage.src = '';
+    modalImage.alt = '';
+    modalBio.innerHTML = '';
+
+    if (!isClosingFromHistory && window.history.length > 1) {
+      history.back();
+    }
+
+    isClosingFromHistory = false;
+
+    if (lastTrigger) {
+      lastTrigger.focus();
+    }
+  }
 }
 

@@ -871,6 +871,10 @@ main {
   text-align: justify;
 }
 
+#programs > .section-container > p {
+  text-align: center;
+}
+
 /* Section Lists */
 .content-section ul {
   list-style: none;
@@ -895,6 +899,210 @@ main {
   left: 0;
   color: var(--primary-gold);
   font-size: 1rem;
+}
+
+/* ===========================
+   Board Section
+   =========================== */
+
+.board-section .board-intro {
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.board-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.75rem 1rem;
+  margin-top: 2.5rem;
+  align-items: start;
+}
+
+.board-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem 0.5rem;
+  flex: 0 1 145px;
+  max-width: 145px;
+  border-radius: 16px;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.board-member:hover,
+.board-member:focus-visible {
+  background-color: rgba(139, 92, 246, 0.08);
+  transform: translateY(-3px);
+}
+
+.board-member-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-gold);
+  padding: 0;
+  background: linear-gradient(135deg, var(--dark-slate) 0%, var(--slate) 100%);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.board-member-placeholder {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary-gold);
+}
+
+.board-member-name,
+.board-member-title {
+  display: block;
+  text-align: center;
+}
+
+.board-member-name {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.board-member-title {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.board-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.board-modal[hidden] {
+  display: none;
+}
+
+.board-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(6px);
+}
+
+.board-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(960px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  background: linear-gradient(180deg, var(--dark-slate) 0%, var(--charcoal) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.board-modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background-color: rgba(15, 23, 42, 0.9);
+  color: var(--off-white);
+  font-size: 1.75rem;
+  line-height: 1;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.board-modal-media {
+  background: radial-gradient(circle at top, rgba(139, 92, 246, 0.2) 0%, rgba(15, 23, 42, 0.95) 70%);
+  padding: 3.5rem 1.5rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.board-modal-image {
+  width: min(100%, 360px);
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 3px solid var(--primary-gold);
+  padding: 0;
+  background: transparent;
+}
+
+.board-modal-image[hidden],
+.board-modal-image-placeholder[hidden] {
+  display: none;
+}
+
+.board-modal-image-placeholder {
+  min-width: 120px;
+  min-height: 120px;
+  padding: 1.25rem 1.75rem;
+  border-radius: 999px;
+  border: 3px solid var(--primary-gold);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-heading);
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: bold;
+  color: var(--primary-gold);
+  background: linear-gradient(135deg, var(--slate) 0%, var(--dark-slate) 100%);
+}
+
+.board-modal-content {
+  padding: 1rem 1.5rem 2rem;
+  text-align: left;
+}
+
+.board-modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+  text-align: left;
+}
+
+.board-modal-title {
+  color: var(--primary-gold);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.board-modal-bio p {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  h2,
+  .content-section h2 {
+    font-size: 1.85rem;
+  }
+
+  #programs .section-container > h2 {
+    font-size: 1.25rem;
+    white-space: nowrap;
+  }
 }
 
 /* ===========================
@@ -1147,6 +1355,7 @@ main {
   position: relative;
   line-height: var(--leading-relaxed);
   color: var(--text-secondary);
+  font-size: 0.95rem;
 }
 
 .donation-info ul li::before {
@@ -1175,12 +1384,21 @@ main {
 
   .qr-code-container,
   .donation-info {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 
   .qr-code {
     width: min(100%, 260px);
     min-height: 0;
+  }
+
+  .donation-info ul li {
+    font-size: 0.84rem;
+    padding-left: 1.2rem;
+  }
+
+  .donation-info ul li::before {
+    font-size: 1rem;
   }
 }
 
@@ -1377,9 +1595,9 @@ main {
   max-width: var(--max-content-width);
   margin: 0 auto;
   padding: 0 1rem;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: block;
   gap: 2rem;
+  text-align: center;
 }
 
 /* Fallback for browsers without CSS Grid support */
@@ -1494,6 +1712,28 @@ main {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
   }
+
+  .board-grid {
+    gap: 2rem 1.5rem;
+  }
+
+  .board-member-circle {
+    width: 140px;
+    height: 140px;
+  }
+
+  .board-member {
+    flex-basis: 160px;
+    max-width: 180px;
+  }
+
+  .board-member-name {
+    font-size: var(--text-lg);
+  }
+
+  .board-modal-content {
+    padding: 1rem 2rem 2.25rem;
+  }
   
   /* Fallback for browsers without CSS Grid support */
   @supports not (display: grid) {
@@ -1507,6 +1747,23 @@ main {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     align-items: stretch; /* was start */
+  }
+
+  .donation-info ul {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .donation-info ul li {
+    font-size: 1.02rem;
+    padding-left: 1.7rem;
+    text-align: left;
+  }
+
+  .donation-info ul li::before {
+    left: 0.1rem;
   }
   
   /* Make both cards fill the row height */
@@ -1538,8 +1795,6 @@ main {
   
   /* Footer Content - Three Columns */
   .footer-content {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
     padding: 0 2rem;
   }
 }
@@ -1549,6 +1804,25 @@ main {
   /* Section Container - Maximum Padding */
   .section-container {
     padding: 0 3rem;
+  }
+
+  .board-grid {
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .board-member {
+    flex: 0 0 160px;
+    max-width: 160px;
+  }
+
+  .board-member-name {
+    font-size: 1.05rem;
+  }
+
+  .board-member-title {
+    white-space: nowrap;
   }
   
   /* Program List - Three Columns for larger screens */
