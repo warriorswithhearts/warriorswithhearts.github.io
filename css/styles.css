@@ -153,6 +153,7 @@ body {
   color: var(--text-primary);
   background-color: var(--background);
   min-height: 100vh;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -1100,8 +1101,22 @@ body.modal-open {
   }
 
   #programs .section-container > h2 {
-    font-size: 1.25rem;
+    font-size: clamp(1.05rem, 4.6vw, 1.25rem);
     white-space: nowrap;
+  }
+
+  .board-grid {
+    gap: 1.5rem 0.75rem;
+  }
+
+  .board-member {
+    flex: 1 1 calc(50% - 0.75rem);
+    max-width: 140px;
+    min-width: 0;
+  }
+
+  .board-member-name {
+    font-size: clamp(1rem, 4.8vw, 1.2rem);
   }
 }
 
@@ -1250,7 +1265,7 @@ body.modal-open {
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
-  text-align: center;
+  text-align: left;
 }
 
 /* Fallback for browsers without CSS Grid support */
@@ -1261,66 +1276,84 @@ body.modal-open {
     margin: -1rem;
   }
   
-  .qr-code-container,
-  .donation-info {
+  .donation-info,
+  .donation-options {
     flex: 0 0 calc(100% - 2rem);
     margin: 1rem;
   }
 }
 
-/* QR Code Container */
-.qr-code-container {
-  text-align: center;
-  padding: 2rem;
-  background: linear-gradient(135deg, var(--dark-slate) 0%, var(--slate) 100%);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.qr-code-container,
-.donation-info {
+.donation-info,
+.donation-options {
   width: 100%;
   min-width: 0;
 }
 
+.donation-options {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+.donation-option-form {
+  margin: 0;
+}
+
+.donation-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--dark-slate) 0%, var(--slate) 100%);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.donation-option-button {
+  width: 100%;
+  text-align: center;
+}
+
+.donation-option:hover,
+.donation-option:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--primary-gold);
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.25);
+  text-decoration: none;
+}
+
+.donation-option-label {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: bold;
+  color: var(--primary-gold);
+}
+
 .qr-code {
-  width: 300px;
+  width: min(100%, 240px);
+  aspect-ratio: 1 / 1;
   max-width: 100%;
   height: auto;
-  margin: 0 auto 1rem;
+  margin: 0 auto;
   border: 3px solid var(--primary-gold);
   border-radius: 12px;
-  padding: 1rem;
+  padding: 0.75rem;
   background-color: var(--white);
-  /* Fallback for missing QR code */
-  min-height: 300px;
+  min-height: 0;
+  object-fit: contain;
   box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
 }
 
 .qr-instructions {
-  font-size: var(--text-base);
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  margin-bottom: 0.5rem;
-}
-
-.qr-alternative {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-}
-
-.qr-code-container p,
-.donation-info p {
-  margin-left: 0;
-  margin-right: 0;
   text-align: center;
-}
-
-.qr-alternative a {
-  color: var(--link);
-  font-weight: 600;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  margin: 0;
 }
 
 /* Donation Info */
@@ -1382,14 +1415,13 @@ body.modal-open {
     gap: 1.5rem;
   }
 
-  .qr-code-container,
-  .donation-info {
+  .donation-info,
+  .donation-option {
     padding: 1.25rem;
   }
 
   .qr-code {
-    width: min(100%, 260px);
-    min-height: 0;
+    width: min(100%, 220px);
   }
 
   .donation-info ul li {
@@ -1417,6 +1449,13 @@ body.modal-open {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
   align-items: stretch;
+}
+
+#contact > .section-container > p {
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
 }
 
 
@@ -1744,46 +1783,57 @@ body.modal-open {
   
   /* Donation Content - Two Columns */
   .donation-content {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 2rem;
-    align-items: stretch; /* was start */
+    align-items: stretch;
   }
 
   .donation-info ul {
-    width: fit-content;
-    max-width: 100%;
+    width: min(100%, 52rem);
+    max-width: 52rem;
     margin-left: auto;
     margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2.5rem;
+    row-gap: 0.75rem;
   }
 
   .donation-info ul li {
-    font-size: 1.02rem;
+    font-size: 1rem;
     padding-left: 1.7rem;
     text-align: left;
+    margin-bottom: 0;
   }
 
   .donation-info ul li::before {
     left: 0.1rem;
   }
+
+  .donation-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
   
-  /* Make both cards fill the row height */
-  .qr-code-container,
   .donation-info {
-    height: 100%;
     display: flex;
     flex-direction: column;
   }
-  
-  /* Optional: keep the “thank you” at the bottom */
+
   .donation-info .thank-you {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
     margin-top: auto;
+    text-align: center;
   }
   
   /* Fallback for browsers without CSS Grid support */
   @supports not (display: grid) {
-    .qr-code-container,
-    .donation-info {
-      flex: 0 0 calc(50% - 2rem);
+    .donation-info,
+    .donation-options {
+      flex: 0 0 calc(100% - 2rem);
     }
   }
   

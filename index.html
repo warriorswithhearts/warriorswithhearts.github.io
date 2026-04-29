@@ -323,12 +323,6 @@
         <p>Your generous donations help us continue providing vital services to veterans and military personnel. Every contribution makes a difference in the lives of those who have served our nation.</p>
         
         <div class="donation-content">
-          <div class="qr-code-container">
-            <img src="images/qr-code.png" alt="Scan to donate to Warriors with Hearts via Venmo" class="qr-code" loading="lazy">
-            <p class="qr-instructions">Use the QR code above to support our cause.</p>
-            <p class="qr-alternative">Or visit: <a href="https://cash.app/$warriorswithhearts" target="_blank" rel="noopener noreferrer">https://cash.app/$warriorswithhearts</a></p>
-          </div>
-          
           <div class="donation-info">
             <h3>Why Donate?</h3>
             <ul>
@@ -338,6 +332,29 @@
               <li>Transparent 501(c)(3); funds directly serve veterans</li>
             </ul>
             <p class="thank-you">Thank you for your support in honoring those who served!</p>
+          </div>
+
+          <div class="donation-options" role="list">
+            <a class="donation-option" href="https://cash.app/$warriorswithhearts" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="Donate with Cash App">
+              <span class="donation-option-label">Cash App</span>
+              <img src="https://cash.app/qr/$warriorswithhearts?size=288&amp;margin=0&amp;bg=000000&amp;logoColor=ffffff&amp;format=svg" alt="Cash App QR code for donating to Warriors with Hearts" class="qr-code" loading="lazy">
+              <span class="qr-instructions">Scan or tap to donate with Cash App</span>
+            </a>
+
+            <a class="donation-option" href="https://account.venmo.com/u/Warriorswithhearts" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="Donate with Venmo">
+              <span class="donation-option-label">Venmo</span>
+              <img src="images/venmo-qr.jpg" alt="Venmo QR code for donating to Warriors with Hearts" class="qr-code" loading="lazy">
+              <span class="qr-instructions">Scan or tap to donate with Venmo</span>
+            </a>
+
+            <form class="donation-option-form" action="https://www.paypal.com/donate" method="post" target="_blank" role="listitem">
+              <input type="hidden" name="hosted_button_id" value="956L9PN7TL78W">
+              <button class="donation-option donation-option-button" type="submit" aria-label="Donate with PayPal">
+                <span class="donation-option-label">PayPal</span>
+                <img src="images/paypal-qr.png" alt="PayPal QR code for donating to Warriors with Hearts" class="qr-code" loading="lazy">
+                <span class="qr-instructions">Scan or tap to donate with PayPal</span>
+              </button>
+            </form>
           </div>
         </div>
       </div>

@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Active Link Tracking
   initActiveNavTracking();
-  
-  // Mobile QR Code Click Functionality
-  initMobileQRCode();
 
   // Expandable Program Cards
   initExpandableProgramCards();
@@ -222,61 +219,6 @@ function updateActiveNavLink(navLinks, sections) {
       }
     }
   });
-}
-
-/**
- * Detect if the user is on a mobile device
- * @returns {boolean} True if mobile device, false otherwise
- */
-function isMobileDevice() {
-  // Check for touch support and screen width
-  const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const isMobileWidth = window.innerWidth < 768;
-  
-  // Check user agent for mobile devices
-  const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-  const isMobileUserAgent = mobileRegex.test(navigator.userAgent);
-  
-  return (hasTouchScreen && isMobileWidth) || isMobileUserAgent;
-}
-
-/**
- * Initialize mobile QR code click functionality
- * Makes QR code clickable on mobile devices to directly open payment link
- */
-function initMobileQRCode() {
-  const qrCodeImage = document.querySelector('.qr-code');
-  const qrLink = 'https://www.paypal.com/qrcodes/managed/a84d018b-f8d9-4a26-9c41-b27b1644aae3';
-  
-  if (qrCodeImage && isMobileDevice()) {
-    // Make QR code clickable on mobile
-    qrCodeImage.style.cursor = 'pointer';
-    qrCodeImage.setAttribute('role', 'button');
-    qrCodeImage.setAttribute('tabindex', '0');
-    qrCodeImage.setAttribute('aria-label', 'Open Venmo donation link');
-    
-    // Add click handler
-    qrCodeImage.addEventListener('click', function() {
-      window.location.href = qrLink;
-    });
-    
-    // Add keyboard support for accessibility
-    qrCodeImage.addEventListener('keydown', function(event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        window.location.href = qrLink;
-      }
-    });
-    
-    // Add visual feedback for mobile users
-    qrCodeImage.addEventListener('touchstart', function() {
-      qrCodeImage.style.opacity = '0.7';
-    });
-    
-    qrCodeImage.addEventListener('touchend', function() {
-      qrCodeImage.style.opacity = '1';
-    });
-  }
 }
 
 /**
