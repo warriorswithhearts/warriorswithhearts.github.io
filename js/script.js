@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Board Member Modal
   initBoardModal();
+
+  // Mission Gallery Carousel
+  initMissionCarousel();
 });
 
 /**
@@ -347,6 +350,450 @@ function initBoardModal() {
     if (lastTrigger) {
       lastTrigger.focus();
     }
+  }
+}
+
+/**
+ * Initialize the hero mission gallery carousel.
+ * Handles autoplay, thumbnail navigation, hover pause, and modal enlargement.
+ */
+function initMissionCarousel() {
+  const slideDefinitions = [
+    { src: 'images/gallery/1.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/2.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/3.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/4.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/5.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/6.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/7.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/8.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/9.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/10.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/11.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/12.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/13.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/14.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/animal 1.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/animal 2.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/animal 3.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/animal 4.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/animal 5.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/animal 6.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/animal 7.webp', title: 'Mission Moments', meta: 'Warriors with Hearts in action' },
+    { src: 'images/gallery/animal 2014.webp', title: 'Mission Moments', meta: 'Archive image from 2014' },
+    { src: 'images/gallery/animal 2017.webp', title: 'Mission Moments', meta: 'Archive image from 2017' },
+    { src: 'images/gallery/animal 2018.webp', title: 'Mission Moments', meta: 'Archive image from 2018' },
+    { src: 'images/gallery/animal 2019.webp', title: 'Mission Moments', meta: 'Archive image from 2019' },
+    { src: 'images/gallery/animal 2020.webp', title: 'Mission Moments', meta: 'Archive image from 2020' },
+    { src: 'images/gallery/animal 2021.webp', title: 'Mission Moments', meta: 'Archive image from 2021' }
+  ];
+
+  const carousel = document.querySelector('.mission-carousel');
+  const stageButton = carousel ? carousel.querySelector('.mission-carousel-stage') : null;
+  const primaryImage = carousel ? carousel.querySelector('.mission-carousel-image-primary') : null;
+  const secondaryImage = carousel ? carousel.querySelector('.mission-carousel-image-secondary') : null;
+  const title = carousel ? carousel.querySelector('.mission-carousel-title') : null;
+  const meta = carousel ? carousel.querySelector('.mission-carousel-meta') : null;
+  const count = carousel ? carousel.querySelector('.mission-carousel-count') : null;
+  const thumbnails = carousel ? carousel.querySelector('.mission-carousel-thumbnails') : null;
+  const prevButton = carousel ? carousel.querySelector('.mission-carousel-prev') : null;
+  const nextButton = carousel ? carousel.querySelector('.mission-carousel-next') : null;
+  const modal = document.querySelector('.gallery-modal');
+  const modalImage = modal ? modal.querySelector('.gallery-modal-image') : null;
+  const modalTitle = modal ? modal.querySelector('.gallery-modal-title') : null;
+  const modalMeta = modal ? modal.querySelector('.gallery-modal-meta') : null;
+  const modalPrevButton = modal ? modal.querySelector('.gallery-modal-prev') : null;
+  const modalNextButton = modal ? modal.querySelector('.gallery-modal-next') : null;
+  const modalCloseButtons = modal ? modal.querySelectorAll('[data-gallery-close]') : [];
+
+  if (
+    !carousel ||
+    !stageButton ||
+    !primaryImage ||
+    !secondaryImage ||
+    !title ||
+    !meta ||
+    !count ||
+    !thumbnails ||
+    !prevButton ||
+    !nextButton ||
+    !modal ||
+    !modalImage ||
+    !modalTitle ||
+    !modalMeta ||
+    !modalPrevButton ||
+    !modalNextButton ||
+    slideDefinitions.length === 0
+  ) {
+    return;
+  }
+
+  const slides = slideDefinitions.map(function(definition, index) {
+    return {
+      src: definition.src,
+      alt: 'Warriors with Hearts gallery image ' + (index + 1),
+      label: 'Photo ' + (index + 1) + ' of ' + slideDefinitions.length,
+      title: definition.title,
+      meta: definition.meta,
+      countLabel:
+        String(index + 1).padStart(2, '0') +
+        ' / ' +
+        String(slideDefinitions.length).padStart(2, '0')
+    };
+  });
+
+  const autoplayDelay = 6200;
+  let currentIndex = 0;
+  let autoplayId = null;
+  let hoverPaused = false;
+  let modalOpen = false;
+  let lastTrigger = null;
+  let isClosingFromHistory = false;
+  let activeImage = primaryImage;
+  let inactiveImage = secondaryImage;
+  let autoplayStartedAt = 0;
+  let remainingAutoplayMs = autoplayDelay;
+  let isVisible = false;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  thumbnails.innerHTML = '';
+
+  slides.forEach(function(slide, index) {
+    const thumb = document.createElement('button');
+    thumb.type = 'button';
+    thumb.className = 'mission-carousel-thumbnail';
+    thumb.setAttribute('role', 'tab');
+    thumb.setAttribute('aria-label', 'Show ' + slide.label.toLowerCase());
+    thumb.setAttribute('aria-selected', 'false');
+    thumb.dataset.index = String(index);
+
+    const thumbImage = document.createElement('img');
+    thumbImage.src = encodeURI(slide.src);
+    thumbImage.alt = slide.alt;
+    thumbImage.loading = 'lazy';
+
+    thumb.appendChild(thumbImage);
+    thumbnails.appendChild(thumb);
+
+    thumb.addEventListener('click', function() {
+      lastTrigger = thumb;
+      showSlide(index, true);
+    });
+  });
+
+  const thumbnailButtons = thumbnails.querySelectorAll('.mission-carousel-thumbnail');
+
+  prevButton.addEventListener('click', function() {
+    lastTrigger = prevButton;
+    showSlide(currentIndex - 1, true);
+  });
+
+  nextButton.addEventListener('click', function() {
+    lastTrigger = nextButton;
+    showSlide(currentIndex + 1, true);
+  });
+
+  stageButton.addEventListener('click', function() {
+    lastTrigger = stageButton;
+    openGalleryModal(true);
+  });
+
+  carousel.addEventListener('mouseenter', function() {
+    hoverPaused = true;
+    stopAutoplay();
+  });
+
+  carousel.addEventListener('mouseleave', function() {
+    hoverPaused = false;
+    startAutoplay();
+  });
+
+  carousel.addEventListener('focusin', stopAutoplay);
+  carousel.addEventListener('focusout', function() {
+    window.setTimeout(function() {
+      const activeElement = document.activeElement;
+      if (!carousel.contains(activeElement) && !modal.contains(activeElement)) {
+        startAutoplay();
+      }
+    }, 0);
+  });
+
+  modalCloseButtons.forEach(function(button) {
+    button.addEventListener('click', closeGalleryModal);
+  });
+
+  modalPrevButton.addEventListener('click', function() {
+    lastTrigger = modalPrevButton;
+    showSlide(currentIndex - 1, true);
+  });
+
+  modalNextButton.addEventListener('click', function() {
+    lastTrigger = modalNextButton;
+    showSlide(currentIndex + 1, true);
+  });
+
+  modalImage.addEventListener(
+    'touchstart',
+    function(event) {
+      if (event.touches.length !== 1) {
+        return;
+      }
+
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  modalImage.addEventListener(
+    'touchend',
+    function(event) {
+      if (event.changedTouches.length !== 1) {
+        return;
+      }
+
+      const deltaX = event.changedTouches[0].clientX - touchStartX;
+      const deltaY = event.changedTouches[0].clientY - touchStartY;
+      const absX = Math.abs(deltaX);
+      const absY = Math.abs(deltaY);
+
+      if (absX < 40 && absY < 40) {
+        return;
+      }
+
+      lastTrigger = modalImage;
+
+      if (absX > absY) {
+        if (deltaX < 0) {
+          showSlide(currentIndex + 1, true);
+        } else {
+          showSlide(currentIndex - 1, true);
+        }
+      } else {
+        if (deltaY < 0) {
+          showSlide(currentIndex + 1, true);
+        } else {
+          showSlide(currentIndex - 1, true);
+        }
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && !modal.hidden) {
+      closeGalleryModal();
+      return;
+    }
+
+    if (!modal.hidden) {
+      if (event.key === 'ArrowRight') {
+        showSlide(currentIndex + 1, true);
+      } else if (event.key === 'ArrowLeft') {
+        showSlide(currentIndex - 1, true);
+      }
+      return;
+    }
+
+    if (carousel.contains(document.activeElement)) {
+      if (event.key === 'ArrowRight') {
+        showSlide(currentIndex + 1, true);
+      } else if (event.key === 'ArrowLeft') {
+        showSlide(currentIndex - 1, true);
+      }
+    }
+  });
+
+  window.addEventListener('popstate', function() {
+    if (!modal.hidden) {
+      isClosingFromHistory = true;
+      closeGalleryModal();
+    }
+  });
+
+  const visibilityObserver = new IntersectionObserver(
+    function(entries) {
+      const entry = entries[0];
+      isVisible = Boolean(entry && entry.isIntersecting && entry.intersectionRatio >= 0.35);
+
+      if (isVisible) {
+        startAutoplay();
+      } else {
+        stopAutoplay();
+      }
+    },
+    {
+      threshold: [0, 0.35, 0.75]
+    }
+  );
+
+  visibilityObserver.observe(carousel);
+
+  primaryImage.classList.add('is-active');
+  primaryImage.src = encodeURI(slides[0].src);
+  primaryImage.alt = slides[0].alt;
+  secondaryImage.src = encodeURI(slides[0].src);
+  secondaryImage.alt = '';
+  showSlide(0, false);
+
+  function showSlide(index, userInitiated) {
+    const previousIndex = currentIndex;
+    const nextIndex = (index + slides.length) % slides.length;
+    const isWrapToStart = previousIndex === slides.length - 1 && nextIndex === 0;
+    currentIndex = nextIndex;
+
+    const slide = slides[currentIndex];
+    const encodedSrc = encodeURI(slide.src);
+
+    title.textContent = slide.title;
+    meta.textContent = slide.meta + ' \u2022 ' + slide.label;
+    count.textContent = slide.countLabel;
+    stageButton.setAttribute('aria-label', 'Open larger view of ' + slide.label.toLowerCase());
+
+    thumbnailButtons.forEach(function(button, buttonIndex) {
+      const isActive = buttonIndex === currentIndex;
+      button.setAttribute('aria-selected', String(isActive));
+      button.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
+
+    scrollActiveThumbnailIntoView();
+
+    if (!modal.hidden) {
+      modalImage.src = encodedSrc;
+      modalImage.alt = slide.alt;
+      modalTitle.textContent = slide.title;
+      modalMeta.textContent = slide.meta + ' \u2022 ' + slide.label;
+    }
+
+    if (previousIndex === nextIndex && userInitiated === false) {
+      activeImage.src = encodedSrc;
+      activeImage.alt = slide.alt;
+      activeImage.classList.add('is-active');
+      inactiveImage.classList.remove('is-active', 'is-wrapping');
+    } else {
+      inactiveImage.src = encodedSrc;
+      inactiveImage.alt = slide.alt;
+      inactiveImage.classList.toggle('is-wrapping', isWrapToStart);
+      activeImage.classList.toggle('is-wrapping', isWrapToStart);
+
+      if (inactiveImage.complete) {
+        requestAnimationFrame(runCrossfade);
+      } else {
+        inactiveImage.onload = function() {
+          inactiveImage.onload = null;
+          requestAnimationFrame(runCrossfade);
+        };
+      }
+    }
+
+    if (userInitiated) {
+      restartAutoplay();
+    }
+
+    function runCrossfade() {
+      inactiveImage.classList.add('is-active');
+      activeImage.classList.remove('is-active');
+
+      const previousActive = activeImage;
+      activeImage = inactiveImage;
+      inactiveImage = previousActive;
+
+      window.setTimeout(function() {
+        inactiveImage.classList.remove('is-wrapping');
+        activeImage.classList.remove('is-wrapping');
+        inactiveImage.alt = '';
+      }, isWrapToStart ? 820 : 620);
+    }
+  }
+
+  function scrollActiveThumbnailIntoView() {
+    const activeThumb = thumbnailButtons[currentIndex];
+    if (!activeThumb) {
+      return;
+    }
+
+    if (!isVisible) {
+      return;
+    }
+
+    const trackLeft = thumbnails.scrollLeft;
+    const trackWidth = thumbnails.clientWidth;
+    const thumbLeft = activeThumb.offsetLeft;
+    const thumbWidth = activeThumb.offsetWidth;
+    const targetLeft = thumbLeft - (trackWidth / 2) + (thumbWidth / 2);
+
+    thumbnails.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: 'smooth'
+    });
+  }
+
+  function startAutoplay() {
+    if (!isVisible || hoverPaused || modalOpen || autoplayId !== null) {
+      return;
+    }
+
+    autoplayStartedAt = performance.now();
+    autoplayId = window.setTimeout(function advanceSlide() {
+      showSlide(currentIndex + 1, false);
+      remainingAutoplayMs = autoplayDelay;
+      autoplayStartedAt = performance.now();
+      autoplayId = window.setTimeout(advanceSlide, autoplayDelay);
+    }, remainingAutoplayMs);
+  }
+
+  function stopAutoplay() {
+    if (autoplayId !== null) {
+      remainingAutoplayMs = Math.max(250, remainingAutoplayMs - (performance.now() - autoplayStartedAt));
+      window.clearTimeout(autoplayId);
+      autoplayId = null;
+    }
+  }
+
+  function restartAutoplay() {
+    stopAutoplay();
+    remainingAutoplayMs = autoplayDelay;
+    startAutoplay();
+  }
+
+  function openGalleryModal(pushHistory) {
+    const slide = slides[currentIndex];
+
+    modal.hidden = false;
+    modalOpen = true;
+    stopAutoplay();
+    modalImage.src = encodeURI(slide.src);
+    modalImage.alt = slide.alt;
+    modalTitle.textContent = slide.title;
+    modalMeta.textContent = slide.meta + ' \u2022 ' + slide.label;
+    document.body.classList.add('modal-open');
+
+    if (pushHistory) {
+      history.pushState({ galleryModalOpen: true, imageIndex: currentIndex }, '', window.location.href);
+    }
+  }
+
+  function closeGalleryModal() {
+    modal.hidden = true;
+    modalOpen = false;
+    modalImage.src = '';
+    modalImage.alt = '';
+    modalTitle.textContent = 'Warriors with Hearts gallery image';
+    modalMeta.textContent = '';
+    document.body.classList.remove('modal-open');
+
+    if (!isClosingFromHistory && window.history.length > 1) {
+      history.back();
+    }
+
+    isClosingFromHistory = false;
+
+    if (lastTrigger) {
+      lastTrigger.focus();
+    }
+
+    startAutoplay();
   }
 }
 

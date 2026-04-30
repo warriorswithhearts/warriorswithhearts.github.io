@@ -124,7 +124,46 @@
         <h1>Warriors with Hearts</h1>
         <p class="tagline">FORTIFYING THE HEARTS THAT BORE THE BURDEN</p>
         <p class="mission-brief">Outdoor, recreational, and family opportunities for Purple Heart recipients.</p>
+        <p class="hero-sponsor-note">Possible thanks to the support of our<br/><a href="#sponsors">sponsors and partners</a>.</p>
         <a href="#donate" class="cta-button">Support Our Mission</a>
+        <div class="mission-carousel" aria-label="Warriors with Hearts photo gallery">
+          <div class="mission-carousel-frame">
+            <button class="mission-carousel-arrow mission-carousel-prev" type="button" aria-label="Show previous gallery image">
+              <span aria-hidden="true">&#8249;</span>
+            </button>
+            <button class="mission-carousel-stage" type="button" aria-label="Open larger view of current gallery image">
+              <img
+                class="mission-carousel-image mission-carousel-image-primary"
+                src="images/gallery/1.webp"
+                alt="Warriors with Hearts gallery image 1"
+                loading="eager"
+              >
+              <img
+                class="mission-carousel-image mission-carousel-image-secondary"
+                src="images/gallery/1.webp"
+                alt=""
+                loading="eager"
+                aria-hidden="true"
+              >
+            </button>
+            <button class="mission-carousel-arrow mission-carousel-next" type="button" aria-label="Show next gallery image">
+              <span aria-hidden="true">&#8250;</span>
+            </button>
+          </div>
+          <div class="mission-carousel-caption" aria-live="polite">
+            <p class="mission-carousel-kicker">Warriors with Hearts Gallery</p>
+            <div class="mission-carousel-caption-row">
+              <div class="mission-carousel-caption-copy">
+                <p class="mission-carousel-title">Mission Moments</p>
+                <p class="mission-carousel-meta">Photo 1 of 27</p>
+              </div>
+              <p class="mission-carousel-count">01 / 27</p>
+            </div>
+          </div>
+          <div class="mission-carousel-thumbnail-track">
+            <div class="mission-carousel-thumbnails" role="tablist" aria-label="Gallery thumbnails"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -360,6 +399,46 @@
       </div>
     </section>
 
+    <!-- Sponsors Section -->
+    <section id="sponsors" class="content-section sponsors-section">
+      <div class="section-container">
+        <h2>Our Sponsors</h2>
+        <p class="sponsors-intro">We’re grateful for the businesses and partners who help make this mission possible.</p>
+
+        <div class="sponsors-grid" role="list" aria-label="Warriors with Hearts sponsors">
+          <div class="sponsor-card" role="listitem">
+            <img src="images/sponsors/Dirt%20Poor%20Logo.webp" alt="Dirt Poor sponsor logo" class="sponsor-logo" loading="lazy">
+          </div>
+          <div class="sponsor-card" role="listitem">
+            <img src="images/sponsors/gandy_ink.svg" alt="Gandy Ink sponsor logo" class="sponsor-logo" loading="lazy">
+          </div>
+          <div class="sponsor-card" role="listitem">
+            <img src="images/sponsors/GBB%20Logo%20Transparent%20Background.avif" alt="GBB sponsor logo" class="sponsor-logo" loading="lazy">
+          </div>
+          <div class="sponsor-card" role="listitem">
+            <img src="images/sponsors/Kallus%20logo.webp" alt="Kallus sponsor logo" class="sponsor-logo" loading="lazy">
+          </div>
+          <div class="sponsor-card" role="listitem">
+            <img src="images/sponsors/second_hand_smoke.webp" alt="Second Hand Smoke sponsor logo" class="sponsor-logo" loading="lazy">
+          </div>
+          <div class="sponsor-card" role="listitem">
+            <img src="images/sponsors/slow_coach.webp" alt="Slow Coach sponsor logo" class="sponsor-logo" loading="lazy">
+          </div>
+          <div class="sponsor-card" role="listitem">
+            <img src="images/sponsors/Southern%20Glaziers.webp" alt="Southern Glaziers sponsor logo" class="sponsor-logo" loading="lazy">
+          </div>
+          <div class="sponsor-card" role="listitem">
+            <span class="sponsor-logo-shell sponsor-logo-shell-dark">
+              <img src="images/sponsors/srm-logo.svg" alt="SRM sponsor logo" class="sponsor-logo" loading="lazy">
+            </span>
+          </div>
+          <div class="sponsor-card" role="listitem">
+            <img src="images/sponsors/Sweetwater%20steel.webp" alt="Sweetwater Steel sponsor logo" class="sponsor-logo" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="content-section">
       <div class="section-container">
@@ -444,6 +523,23 @@
         <p class="board-modal-title"></p>
         <div class="board-modal-bio"></div>
       </div>
+    </div>
+  </div>
+
+  <div class="gallery-modal" hidden>
+    <div class="gallery-modal-backdrop" data-gallery-close></div>
+    <div class="gallery-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="gallery-modal-title">
+      <button class="gallery-modal-close" type="button" aria-label="Close gallery image" data-gallery-close>&times;</button>
+      <button class="gallery-modal-arrow gallery-modal-prev" type="button" aria-label="Show previous gallery image">
+        <span aria-hidden="true">&#8249;</span>
+      </button>
+      <button class="gallery-modal-arrow gallery-modal-next" type="button" aria-label="Show next gallery image">
+        <span aria-hidden="true">&#8250;</span>
+      </button>
+      <p class="gallery-modal-kicker">Warriors with Hearts Gallery</p>
+      <p class="gallery-modal-title" id="gallery-modal-title">Warriors with Hearts gallery image</p>
+      <p class="gallery-modal-meta">Photo 1 of 27</p>
+      <img src="" alt="" class="gallery-modal-image">
     </div>
   </div>
 
