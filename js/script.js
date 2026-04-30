@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Mission Gallery Carousel
   initMissionCarousel();
+
+  // Financials Accordion
+  initFinancialsAccordion();
 });
 
 /**
@@ -795,5 +798,25 @@ function initMissionCarousel() {
 
     startAutoplay();
   }
+}
+
+/**
+ * Initialize bottom-of-page financials accordion.
+ */
+function initFinancialsAccordion() {
+  const toggle = document.querySelector('.financials-toggle');
+  const content = document.querySelector('.financials-content');
+
+  if (!toggle || !content) {
+    return;
+  }
+
+  toggle.addEventListener('click', function() {
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    const shouldExpand = !isExpanded;
+
+    toggle.setAttribute('aria-expanded', String(shouldExpand));
+    content.hidden = !shouldExpand;
+  });
 }
 

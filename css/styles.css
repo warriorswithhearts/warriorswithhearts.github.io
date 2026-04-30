@@ -1863,6 +1863,82 @@ body.modal-open {
 }
 
 /* ===========================
+   Financials Section
+   =========================== */
+
+.financials-section {
+  padding: 0 0 2rem;
+  background: var(--background);
+}
+
+.financials-panel {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.financials-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.35rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--off-white);
+  text-align: left;
+}
+
+.financials-toggle::after {
+  content: '+';
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: var(--primary-gold);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.financials-toggle[aria-expanded="true"]::after {
+  content: '-';
+}
+
+.financials-content {
+  padding: 0 1.35rem 1.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.financials-content[hidden] {
+  display: none;
+}
+
+.financials-content p {
+  margin: 1rem 0 0.75rem;
+  text-align: left;
+  color: var(--text-secondary);
+}
+
+.financials-content ul {
+  margin: 0;
+  display: block;
+  text-align: left;
+}
+
+.financials-content li {
+  margin-bottom: 0;
+}
+
+/* ===========================
    Sponsors Section
    =========================== */
 
