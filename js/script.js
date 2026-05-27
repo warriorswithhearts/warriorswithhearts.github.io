@@ -24,7 +24,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Financials Accordion
   initFinancialsAccordion();
+
+  // Temporary Donation Raffle Feature
+  initRaffleFeature();
+
+  // Public Raffle Ticket Assignments
+  initRaffleTicketAssignments();
 });
+
+// Flip this to false when the raffle is over.
+// All raffle-related UI will stay hidden without needing to remove markup.
+const RAFFLE_FEATURE_ENABLED = true;
 
 /**
  * Initialize mobile navigation functionality
@@ -820,3 +830,262 @@ function initFinancialsAccordion() {
   });
 }
 
+
+/**
+ * Initialize the temporary raffle feature.
+ * One toggle controls every raffle-related surface on the site.
+ */
+function initRaffleFeature() {
+  const raffleElements = document.querySelectorAll('[data-raffle-feature]');
+  const openButtons = document.querySelectorAll('[data-raffle-open]');
+  const modal = document.querySelector('.raffle-modal');
+  const dialog = modal ? modal.querySelector('.raffle-modal-dialog') : null;
+  const closeButtons = modal ? modal.querySelectorAll('[data-raffle-close]') : [];
+  const flyerOpenButtons = document.querySelectorAll('[data-raffle-flyer-open]');
+  const flyerModal = document.querySelector('.raffle-flyer-modal');
+  const flyerDialog = flyerModal ? flyerModal.querySelector('.raffle-flyer-modal-dialog') : null;
+  const flyerCloseButtons = flyerModal ? flyerModal.querySelectorAll('[data-raffle-flyer-close]') : [];
+
+  if (!RAFFLE_FEATURE_ENABLED) {
+    raffleElements.forEach(function(element) {
+      element.hidden = true;
+    });
+    return;
+  }
+
+  raffleElements.forEach(function(element) {
+    element.hidden = false;
+  });
+
+  if (!modal || !dialog || openButtons.length === 0) {
+    return;
+  }
+
+  let lastTrigger = null;
+
+  openButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      lastTrigger = button;
+      modal.hidden = false;
+      document.body.classList.add('modal-open');
+      dialog.setAttribute('tabindex', '-1');
+      dialog.focus();
+    });
+  });
+
+  closeButtons.forEach(function(button) {
+    button.addEventListener('click', closeRaffleModal);
+  });
+
+  flyerOpenButtons.forEach(function(button) {
+    button.addEventListener('click', openRaffleFlyerModal);
+  });
+
+  flyerCloseButtons.forEach(function(button) {
+    button.addEventListener('click', closeRaffleFlyerModal);
+  });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && flyerModal && !flyerModal.hidden) {
+      closeRaffleFlyerModal();
+      return;
+    }
+
+    if (event.key === 'Escape' && !modal.hidden) {
+      closeRaffleModal();
+    }
+  });
+
+  function closeRaffleModal() {
+    modal.hidden = true;
+    document.body.classList.remove('modal-open');
+    closeRaffleFlyerModal();
+
+    if (lastTrigger) {
+      lastTrigger.focus();
+    }
+  }
+
+  function openRaffleFlyerModal() {
+    if (!flyerModal || !flyerDialog) {
+      return;
+    }
+
+    flyerModal.hidden = false;
+    flyerDialog.setAttribute('tabindex', '-1');
+    flyerDialog.focus();
+  }
+
+  function closeRaffleFlyerModal() {
+    if (!flyerModal) {
+      return;
+    }
+
+    flyerModal.hidden = true;
+  }
+}
+
+/**
+ * Load public raffle ticket assignments from a replaceable CSV file.
+ * Future updates only require swapping out data/raffle-ticket-assignments.csv.
+ */
+function initRaffleTicketAssignments() {
+  const tableWrap = document.querySelector('.raffle-ticket-table-wrap');
+  const tableBody = document.querySelector('.raffle-ticket-table tbody');
+  const status = document.querySelector('.raffle-ticket-status');
+  const searchInput = document.querySelector('.raffle-ticket-search');
+  const modalContent = document.querySelector('.raffle-modal-content');
+  const modalDialog = document.querySelector('.raffle-modal-dialog');
+
+  if (!tableWrap || !tableBody || !status || !searchInput || !modalContent || !modalDialog) {
+    return;
+  }
+
+  let assignments = [];
+
+  fetch('data/raffle-ticket-assignments.csv')
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error('Unable to load raffle ticket assignments.');
+      }
+
+      return response.text();
+    })
+    .then(function(csvText) {
+      const rows = parseCsv(csvText);
+      const dataRows = rows.slice(1).filter(function(row) {
+        return row.some(function(cell) {
+          return cell.trim() !== '';
+        });
+      });
+
+      tableBody.innerHTML = '';
+
+      if (dataRows.length === 0) {
+        status.textContent = 'Ticket assignments will appear here once the first reconciled update is published.';
+        tableWrap.hidden = true;
+        return;
+      }
+
+      assignments = dataRows.map(function(row) {
+        return {
+          ticketNumber: row[0] || '',
+          purchaserName: row[1] || ''
+        };
+      });
+
+      status.textContent = 'Start typing a purchaser name to view matching ticket assignments.';
+      tableWrap.hidden = true;
+    })
+    .catch(function() {
+      status.textContent = 'Ticket assignments will appear here once the first reconciled update is published.';
+      tableWrap.hidden = true;
+    });
+
+  searchInput.addEventListener('input', function() {
+    const query = searchInput.value.trim().toLowerCase();
+    tableBody.innerHTML = '';
+
+    if (!assignments.length) {
+      return;
+    }
+
+    if (!query) {
+      status.textContent = 'Start typing a purchaser name to view matching ticket assignments.';
+      tableWrap.hidden = true;
+      return;
+    }
+
+    const matches = assignments.filter(function(assignment) {
+      return assignment.purchaserName.toLowerCase().includes(query);
+    });
+
+    if (matches.length === 0) {
+      status.textContent = 'No matching purchaser names found.';
+      tableWrap.hidden = true;
+      return;
+    }
+
+    matches.forEach(function(assignment) {
+      const tr = document.createElement('tr');
+
+      const ticketCell = document.createElement('td');
+      ticketCell.textContent = assignment.ticketNumber;
+      tr.appendChild(ticketCell);
+
+      const nameCell = document.createElement('td');
+      nameCell.textContent = assignment.purchaserName;
+      tr.appendChild(nameCell);
+
+      tableBody.appendChild(tr);
+    });
+
+    status.textContent = matches.length + ' matching assignment' + (matches.length === 1 ? '' : 's') + ' found.';
+    tableWrap.hidden = false;
+
+    window.requestAnimationFrame(function() {
+      const scrollContainer =
+        modalContent.scrollHeight > modalContent.clientHeight
+          ? modalContent
+          : modalDialog;
+
+      scrollContainer.scrollTo({
+        top: tableWrap.offsetTop - 16,
+        behavior: 'smooth'
+      });
+    });
+  });
+}
+
+/**
+ * Minimal CSV parser supporting quoted fields and commas inside quotes.
+ */
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let cell = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (char === '"' && inQuotes && nextChar === '"') {
+      cell += '"';
+      i += 1;
+      continue;
+    }
+
+    if (char === '"') {
+      inQuotes = !inQuotes;
+      continue;
+    }
+
+    if (char === ',' && !inQuotes) {
+      row.push(cell);
+      cell = '';
+      continue;
+    }
+
+    if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && nextChar === '\n') {
+        i += 1;
+      }
+
+      row.push(cell);
+      rows.push(row);
+      row = [];
+      cell = '';
+      continue;
+    }
+
+    cell += char;
+  }
+
+  if (cell.length > 0 || row.length > 0) {
+    row.push(cell);
+    rows.push(row);
+  }
+
+  return rows;
+}

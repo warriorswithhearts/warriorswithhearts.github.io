@@ -125,7 +125,10 @@
         <p class="tagline">FORTIFYING THE HEARTS THAT BORE THE BURDEN</p>
         <p class="mission-brief">Outdoor, recreational, and family opportunities for Purple Heart recipients.</p>
         <p class="hero-sponsor-note">Possible thanks to the support of our<br/><a href="#sponsors">sponsors and partners</a>.</p>
-        <a href="#donate" class="cta-button">Support Our Mission</a>
+        <div class="hero-actions">
+          <button class="cta-button raffle-cta" type="button" data-raffle-feature data-raffle-open hidden>View Donation Raffle</button>
+          <a href="#donate" class="cta-button cta-button-secondary">Support Our Mission</a>
+        </div>
         <div class="mission-carousel" aria-label="Warriors with Hearts photo gallery">
           <div class="mission-carousel-frame">
             <button class="mission-carousel-arrow mission-carousel-prev" type="button" aria-label="Show previous gallery image">
@@ -167,6 +170,19 @@
       </div>
     </section>
 
+    <section class="raffle-spotlight" data-raffle-feature hidden aria-labelledby="raffle-spotlight-title">
+      <div class="section-container">
+        <div class="raffle-spotlight-card">
+          <div>
+            <p class="raffle-kicker">Limited-Time Fundraiser</p>
+            <h2 id="raffle-spotlight-title">Donation Raffle</h2>
+            <p>Help support Warriors with Hearts and view the current raffle flyer for prize details, ticket cost, and drawing information.</p>
+          </div>
+          <button class="cta-button raffle-spotlight-button" type="button" data-raffle-open>View Raffle Information</button>
+        </div>
+      </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="content-section">
       <div class="section-container">
@@ -200,12 +216,12 @@
             role="listitem"
             data-name="Mark Martin"
             data-title="President"
-            data-full-image=""
+            data-full-image="images/board/mark_martin.webp"
             data-alt="Portrait of Mark Martin"
             data-initials="MM"
             data-bio="<p>Full biography coming soon.</p>"
           >
-            <span class="board-member-circle board-member-placeholder" aria-hidden="true">MM</span>
+            <img src="images/board/mark_martin-circle.webp" alt="Portrait of Mark Martin" class="board-member-circle">
             <span class="board-member-name">Mark Martin</span>
             <span class="board-member-title">President</span>
           </button>
@@ -561,6 +577,86 @@
       <p class="gallery-modal-title" id="gallery-modal-title">Warriors with Hearts gallery image</p>
       <p class="gallery-modal-meta">Photo 1 of 27</p>
       <img src="" alt="" class="gallery-modal-image">
+    </div>
+  </div>
+
+  <div class="raffle-modal" hidden>
+    <div class="raffle-modal-backdrop" data-raffle-close></div>
+    <div class="raffle-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="raffle-modal-title">
+      <button class="raffle-modal-close" type="button" aria-label="Close raffle information" data-raffle-close>&times;</button>
+      <div class="raffle-modal-layout">
+        <div class="raffle-flyer-panel">
+          <button class="raffle-image-zoom-toggle" type="button" data-raffle-flyer-open>Maximize flyer</button>
+          <div class="raffle-image-viewport">
+            <img
+              src="images/raffle.webp"
+              alt="Donation raffle flyer with prize, ticket, and drawing details"
+              class="raffle-modal-image"
+              data-raffle-flyer-open
+            >
+          </div>
+        </div>
+        <div class="raffle-modal-content">
+          <div class="raffle-modal-header">
+            <p class="raffle-kicker">Donation Raffle</p>
+            <h2 id="raffle-modal-title">Raffle Information</h2>
+          </div>
+          <section class="raffle-results-panel" aria-labelledby="raffle-results-title">
+            <h3 id="raffle-results-title">Results</h3>
+            <p>Results will appear here when drawing begins.</p>
+          </section>
+          <section class="raffle-details-panel" aria-labelledby="raffle-details-title">
+            <h3 id="raffle-details-title">Raffle Details</h3>
+            <div class="raffle-modal-summary">
+              <p><strong>Tickets:</strong> $100 each</p>
+              <p><strong>Drawing date:</strong> September 1, 2026</p>
+              <p><strong>Entry:</strong> One ticket is entered in all three drawings</p>
+              <p><strong>Prizes:</strong> Custom 300 Remington Ultra Mag rifle, Ruger Precision 17 HMR with Vortex scope, and Vortex Diamondback HD spotting scope</p>
+              <p><strong>Questions or phone purchases:</strong> <a href="tel:+14322341511">Call Josh Watson at (432) 234-1511</a></p>
+            </div>
+          </section>
+          <section class="raffle-ticket-panel" aria-labelledby="raffle-ticket-title">
+            <h3 id="raffle-ticket-title">Ticket Assignments</h3>
+            <p class="raffle-ticket-intro">Search by purchaser name to find assigned raffle ticket numbers. Assignments will be updated every two weeks after purchases are reconciled.</p>
+            <label class="raffle-ticket-search-label" for="raffle-ticket-search">Search purchaser name</label>
+            <input
+              id="raffle-ticket-search"
+              class="raffle-ticket-search"
+              type="search"
+              placeholder="Start typing a name"
+              autocomplete="off"
+            >
+            <div class="raffle-ticket-status" aria-live="polite">Loading ticket assignments…</div>
+            <div class="raffle-ticket-table-wrap" hidden>
+              <table class="raffle-ticket-table">
+                <caption>Matching raffle ticket assignments</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Ticket Number</th>
+                    <th scope="col">Purchaser Name</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="raffle-flyer-modal" hidden>
+    <div class="raffle-flyer-modal-backdrop" data-raffle-flyer-close></div>
+    <div class="raffle-flyer-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="raffle-flyer-modal-title">
+      <button class="raffle-flyer-modal-close" type="button" aria-label="Close enlarged raffle flyer" data-raffle-flyer-close>&times;</button>
+      <h2 id="raffle-flyer-modal-title">Raffle Flyer</h2>
+      <div class="raffle-flyer-modal-scroll">
+        <img
+          src="images/raffle.webp"
+          alt="Donation raffle flyer with prize, ticket, and drawing details"
+          class="raffle-flyer-modal-image"
+        >
+      </div>
     </div>
   </div>
 
