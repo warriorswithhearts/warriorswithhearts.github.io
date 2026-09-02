@@ -934,10 +934,8 @@ function initRaffleTicketAssignments() {
   const tableBody = document.querySelector('.raffle-ticket-table tbody');
   const status = document.querySelector('.raffle-ticket-status');
   const searchInput = document.querySelector('.raffle-ticket-search');
-  const modalContent = document.querySelector('.raffle-modal-content');
-  const modalDialog = document.querySelector('.raffle-modal-dialog');
 
-  if (!tableWrap || !tableBody || !status || !searchInput || !modalContent || !modalDialog) {
+  if (!tableWrap || !tableBody || !status || !searchInput) {
     return;
   }
 
@@ -1023,18 +1021,20 @@ function initRaffleTicketAssignments() {
     status.textContent = matches.length + ' matching assignment' + (matches.length === 1 ? '' : 's') + ' found.';
     tableWrap.hidden = false;
 
-    window.requestAnimationFrame(function() {
-      const scrollContainer =
-        modalContent.scrollHeight > modalContent.clientHeight
-          ? modalContent
-          : modalDialog;
+    scrollTicketResultsIntoView();
+  });
 
-      scrollContainer.scrollTo({
-        top: tableWrap.offsetTop - 16,
-        behavior: 'smooth'
+  function scrollTicketResultsIntoView() {
+    window.requestAnimationFrame(function() {
+      window.requestAnimationFrame(function() {
+        tableWrap.scrollIntoView({
+          block: 'nearest',
+          inline: 'nearest',
+          behavior: 'smooth'
+        });
       });
     });
-  });
+  }
 }
 
 /**
